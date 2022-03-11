@@ -1,14 +1,12 @@
 const express = require("express");
-const router = require("express").Router();
+const router = express.Router();
 const Product = require("../Models/ProductModel");
-// const { getProduct } = require("../Middleware/GetProduct");
-// const fixArrayID = require("../Helpers");
 
 //Getting all Products.
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
-    res.send(products);
+    res.json(products);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -21,41 +19,41 @@ router.get("/:id", getProduct, (req, res) => {
 
 //Creating one Product.
 router.post("/", async (req, res) => {
-  const product = new Product({
+  const products = Product({
+    image: req.body.image,
     name: req.body.name,
     description: req.body.description,
-    catergory: req.body.catergory,
-    image: req.body.image,
+    category: req.body.category,
     price: req.body.price,
   });
   try {
-    const newProduct = await product.save();
-    res.status(201).send(newProduct);
+    const newProduct = await products.save();
+    res.status(201).json(newProduct);
   } catch (error) {
-    res.status(400).send({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 });
 
 //Updating one Product.
 router.put("/:id", getProduct, async (req, res) => {
   if (req.body.name != null) {
-    res.Product.name = req.body.name;
+    res.product.name = req.body.name;
   }
   if (req.body.catergory != null) {
-    res.Product.catergory = req.body.catergory;
+    res.product.catergory = req.body.catergory;
   }
   if (req.body.description != null) {
-    res.Product.description = req.body.description;
+    res.product.description = req.body.description;
   }
   if (req.body.image != null) {
-    res.Product.image = req.body.image;
+    res.product.image = req.body.image;
   }
   if (req.body.price != null) {
-    res.Product.price = req.body.price;
+    res.product.price = req.body.price;
   }
   try {
     const updateProduct = await res.product.save();
-    res.send(updateProduct);
+    res.json(updateProduct);
   } catch (error) {
     res.status(400).send({ message: error.message });
   }

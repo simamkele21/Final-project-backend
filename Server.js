@@ -2,8 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-// const db = require("./Models");
-// const Role = db.Role;
+
 const productRoutes = require("./Routes/ProductRoutes");
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () => {

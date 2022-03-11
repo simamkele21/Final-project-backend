@@ -1,3 +1,30 @@
 GET http://localhost:2029/
+###home
+
+GET http://localhost:2029/Products
+###getting all products
 
 POST  http://localhost:2029/Products
+Content-Type: application/json
+{
+    "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
+    "name":"YGYI",
+    "description":"syfdgv",
+    "category":"hoodie",
+    "price": "300"
+}
+###creating products needs work but works on mongo
+PUT http://localhost:2029/Products/622b33e51e239ec8a17020d8
+Content-Type: application/json
+{
+    "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
+    "name":"Sima",
+    "description":"Psfni",
+    "category":"Tshirt",
+    "price": "8"
+}
+###editing products needs work but works on mongo
+
+
+GET http://localhost:2029/Clients
+###getting all products
