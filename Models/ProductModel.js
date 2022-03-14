@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-// const { string } = require("yup");
-// const ObjectID = mongoose.Schema.Types.ObjectId;
 
 const ProductSchema = new mongoose.Schema(
   {

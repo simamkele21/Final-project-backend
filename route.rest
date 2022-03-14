@@ -27,4 +27,13 @@ Content-Type: application/json
 
 
 GET http://localhost:2029/Clients
-###getting all products
+###getting all clients
+
+
+POST  http://localhost:2029/Clients
+###creating ner client
+{
+    "name": "Sima",
+    "email": "sima@yahoo.com",
+    "password":"0123456"
+}

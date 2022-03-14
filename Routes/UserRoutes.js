@@ -1,10 +1,13 @@
 const express = require("express");
+const router = express.Router();
 const Client = require("../Models/UserModel");
-const Auth = require("../Middleware/Auth");
-const router = new express.Router();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const verifyToken = require("../Middleware/Auth");
 
-//Getting all accounts.
-router.get("/clients", async (req, res) => {
+
+// //Getting all clients.
+router.get("/", async (req, res) => {
   try {
     const clients = await Client.find();
     res.json(clients);
@@ -13,14 +16,14 @@ router.get("/clients", async (req, res) => {
   }
 });
 
-//Getting one accounts.
-router.get("/:id", getClient, (req, res) => {
+// //Getting one accounts.
+router.get("/:id", Client, (req, res) => {
   res.send(res.client);
 });
 
-//signup
-router.post("/clients", async (req, res) => {
-  const client = new Client(req.body);
+// //signup
+router.post("/Clients", async (req, res) => {
+  const client = new Client(req.body.name, req.body.email, req.body.password);
   try {
     await client.save();
     const token = await client.generateAuthToken();
@@ -30,8 +33,8 @@ router.post("/clients", async (req, res) => {
   }
 });
 
-//login
-router.post("/clients/login", async (req, res) => {
+// //login
+router.post("/Clients/login", async (req, res) => {
   try {
     const client = await Client.findByCredentials(
       req.body.email,
@@ -44,8 +47,8 @@ router.post("/clients/login", async (req, res) => {
   }
 });
 
-//logout
-router.post("/clients/logout", Auth, async (req, res) => {
+// //logout
+router.post("/Clients/logout", Auth, async (req, res) => {
   try {
     req.client.tokens = req.client.tokens.filter((token) => {
       return token.token !== req.token;
@@ -57,8 +60,8 @@ router.post("/clients/logout", Auth, async (req, res) => {
   }
 });
 
-//logout All
-router.post("/clients/logoutAll", Auth, async (req, res) => {
+// //logout All
+router.post("/Clients/logoutAll", Auth, async (req, res) => {
   try {
     req.client.tokens = [];
     await req.client.save();
@@ -68,3 +71,5 @@ router.post("/clients/logoutAll", Auth, async (req, res) => {
   }
 });
 module.exports = router;
+
+
