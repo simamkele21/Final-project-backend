@@ -1,39 +1,50 @@
 GET http://localhost:2029/
-###home
+
+################################################################
 
 GET http://localhost:2029/Products
-###getting all products
+
+################################################################
 
 POST  http://localhost:2029/Products
 Content-Type: application/json
+
 {
     "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
     "name":"YGYI",
-    "description":"syfdgv",
+    "description":"dtudrysht",
     "category":"hoodie",
     "price": "300"
 }
-###creating products needs work but works on mongo
-PUT http://localhost:2029/Products/622b33e51e239ec8a17020d8
+
+################################################################
+
+PUT http://localhost:2029/Products/62309ffa2f348b2e97fc0d08
 Content-Type: application/json
+
 {
-    "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
-    "name":"Sima",
-    "description":"Psfni",
-    "category":"Tshirt",
-    "price": "8"
+ "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
+    "name":"YGYI",
+    "description":"dtudrysht",
+    "category":"hoodie",
+    "price": "500"
 }
-###editing products needs work but works on mongo
 
+################################################################
 
-GET http://localhost:2029/logoutAll
-###getting all clients
+GET http://localhost:2029/logout
+
+################################################################
+
 
 
 POST  http://localhost:2029/Clients
-###creating ner client
+Content-Type: application/json
+
 {
     "name": "Sima",
     "email": "sima@yahoo.com",
     "password":"0123456"
 }
+
+################################################################
