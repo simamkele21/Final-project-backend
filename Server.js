@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.send({ msg: "Welcome to Simamkele's E-commerce backend" });
 });
 app.use("/Products", productRoutes);
-// app.use("/Clients", userRoutes);
+app.use("/Clients", userRoutes);
 
 const port = process.env.PORT || 2029;
 app.listen(port, () => console.log(`Listening on port ${port} ...`));

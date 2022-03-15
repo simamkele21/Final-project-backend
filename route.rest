@@ -26,7 +26,7 @@ Content-Type: application/json
 ###editing products needs work but works on mongo
 
 
-GET http://localhost:2029/Clients
+GET http://localhost:2029/logoutAll
 ###getting all clients
 
 
