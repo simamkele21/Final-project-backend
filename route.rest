@@ -11,7 +11,7 @@ Content-Type: application/json
 
 {
     "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
-    "name":"YGYI",
+    "name":"jhvads",
     "description":"dtudrysht",
     "category":"hoodie",
     "price": "300"
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ################################################################
 
-PUT http://localhost:2029/Products/62309ffa2f348b2e97fc0d08
+PUT http://localhost:2029/Products/6231b40f75175833e10df690
 Content-Type: application/json
 
 {
@@ -32,19 +32,21 @@ Content-Type: application/json
 
 ################################################################
 
-GET http://localhost:2029/logout
+GET http://localhost:2029/Clients/logout
 
 ################################################################
 
 
 
-POST  http://localhost:2029/Clients
+POST  http://localhost:2029/Clients/signup
 Content-Type: application/json
 
 {
     "name": "Sima",
     "email": "sima@yahoo.com",
-    "password":"0123456"
+    "password":"0123456",
+    "phone_number": "0123456"
 }
 
 ################################################################
+GET http://localhost:2029/Clients

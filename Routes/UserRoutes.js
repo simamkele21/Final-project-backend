@@ -5,6 +5,38 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const verifyToken = require("../Middleware/Auth");
 
+
+async function getClient(req, res, next) {
+  let client;
+  try {
+    client = await Client.findById(req.params.id);
+    if (client == null) {
+      return res.status(404).json({ message: "Cannot find Client" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+
+  res.client = client;
+  next();
+}
+
+async function DuplicatednameorEmail(req, res, next) {
+  let client;
+  try {
+    client = await Client.findOne({ name: req.body.name });
+    email = await Client.findOne({ email: req.body.email });
+    if (client || email) {
+      return res.status(404).send({ message: "name already exists" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+  next();
+}
+
+
+
 // //Getting all clients.
 router.get("/", async (req, res) => {
   try {
@@ -22,17 +54,18 @@ router.get("/:id", Client, (req, res) => {
 
 // //signup
 router.post("/signup", DuplicatednameorEmail, async (req, res, next) => {
+  const salt = await bcrypt.genSalt();
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  const client = new Client({
+    name: req.body.name,
+    email: req.body.email,
+    password: hashedPassword,
+    phone_number: req.body.phone_number,
+  });
   try {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    const client = new Client({
-      name: req.body.name,
-      email: req.body.email,
-      password: hashedPassword,
-      phone_number: req.body.phone_number,
-    });
     const newClient = await client.save();
-    res.status(201).json(newClient);
+    // res.status(201).json(newClient);
+    res.status(200).send({message: 'Created new client'})
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -86,32 +119,5 @@ router.delete("/:id", getClient, async (req, res) => {
   }
 });
 
-async function getClient(req, res, next) {
-  let client;
-  try {
-    client = await Client.findById(req.params.id);
-    if (client == null) {
-      return res.status(404).json({ message: "Cannot find Client" });
-    }
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
 
-  res.client = client;
-  next();
-}
-
-async function DuplicatednameorEmail(req, res, next) {
-  let client;
-  try {
-    client = await Client.findOne({ name: req.body.name });
-    email = await Client.findOne({ email: req.body.email });
-    if (client || email) {
-      return res.status(404).send({ message: "name already exists" });
-    }
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-  next();
-}
 module.exports = router;
