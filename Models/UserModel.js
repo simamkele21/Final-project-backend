@@ -7,14 +7,23 @@ const clientSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true, // Unique email for each user
   },
   password: {
     type: String,
     required: true,
   },
-  phone_number: {
+  phoneNumber: {
     type: Number,
     required: true,
+  },
+  userType: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    default: 0,
   },
   cart: {
     type: Array,

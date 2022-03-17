@@ -19,12 +19,25 @@ Content-Type: application/json
 
 ################################################################
 
-PUT http://localhost:2029/Products/6231b40f75175833e10df690
+PUT  http://localhost:2029/Products/623305236c80ccee5ab7850c
 Content-Type: application/json
 
 {
  "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
-    "name":"YGYI",
+    "name":"69",
+    "description":"dtudrysht",
+    "category":"hoodie",
+    "price": "500"
+}
+
+################################################################################################################################
+
+DELETE  http://localhost:2029/Products/623305236c80ccee5ab7850c
+Content-Type: application/json
+
+{
+ "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
+    "name":"69",
     "description":"dtudrysht",
     "category":"hoodie",
     "price": "500"
@@ -32,21 +45,50 @@ Content-Type: application/json
 
 ################################################################
 
-GET http://localhost:2029/Clients/logout
-
-################################################################
-
-
-
 POST  http://localhost:2029/Clients/signup
 Content-Type: application/json
 
 {
-    "name": "Sima",
-    "email": "sima@yahoo.com",
+    "name": "Sia",
+    "email": "sia@yahoo.com",
     "password":"0123456",
     "phone_number": "0123456"
 }
 
 ################################################################
 GET http://localhost:2029/Clients
+
+################################################################
+
+Delete  http://localhost:2029/Clients/62331d94313ffd52d26493a2
+Content-Type: application/json
+
+{
+    "name": "Sia",
+    "email": "sia@yahoo.com",
+    "password":"0123456",
+    "phone_number": "0123456"
+}
+
+################################################################
+POST  http://localhost:2029/Clients/login
+Content-Type: application/json
+
+{
+    "email": "sia@yahoo.com",
+    "password":"0183456"
+}
+
+################################################################
+POST  http://localhost:2029/Clients/logout/
+Content-Type: application/json
+
+{
+    "email": "sia@yahoo.com",
+    "password":"0123456"
+}
+
+# ################################################################
+# POST  http://localhost:2029/Clients/logoutAll
+# Content-Type: application/json
+

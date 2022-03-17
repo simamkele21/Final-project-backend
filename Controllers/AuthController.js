@@ -55,9 +55,9 @@ exports.signup = (req, res) => {
 };
 exports.signin = (req, res) => {
   Client.findOne({
-    username: req.body.username,
+    name: req.body.name,
   })
-    .populate("roles", "-__v")
+    .populate("roles", "User", "Admin")
     .exec((err, client) => {
       if (err) {
         res.status(500).send({ message: err });
@@ -85,7 +85,7 @@ exports.signin = (req, res) => {
       }
       res.status(200).send({
         id: client._id,
-        username: client.username,
+        name: client.name,
         email: client.email,
         roles: authorities,
         accessToken: token,
