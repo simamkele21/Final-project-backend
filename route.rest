@@ -10,24 +10,24 @@ POST  http://localhost:2029/Products
 Content-Type: application/json
 
 {
-    "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
-    "name":"jhvads",
-    "description":"dtudrysht",
-    "category":"hoodie",
-    "price": "300"
+    "image":"https://i.postimg.cc/qqRrWkGs/Ud2ce8a021b7e4d34b7904bcd53c59608c.jpg",
+    "name":"Space scater",
+    "description":" Printed Scater in space",
+    "category":"T-shirt",
+    "price": "250"
 }
 
 ################################################################
 
-PUT  http://localhost:2029/Products/623305236c80ccee5ab7850c
+PUT  http://localhost:2029/Products/6234332b1d08c98cf801e29b
 Content-Type: application/json
 
 {
- "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
-    "name":"69",
-    "description":"dtudrysht",
-    "category":"hoodie",
-    "price": "500"
+    "image":"https://i.postimg.cc/2SDJB9Nh/HTB1cj-K6ak-Y2g-K0j-SZFgq6-A5-OFXa-D.jpg",
+    "name":"winter sweatshirt hoodie",
+    "description":"A fleece hooded pullover sweatshirt that is anti-pilling, anti-Shrink, anti-wrinkle, breathable, sustainable",
+    "category":"Hoodie / Sweatshirt",
+    "price": "600"
 }
 
 ################################################################################################################################
@@ -50,7 +50,7 @@ Content-Type: application/json
 
 {
     "name": "Sia",
-    "email": "sia@yahoo.com",
+    "email": "sixa@yahoo.com",
     "password":"0123456",
     "phone_number": "0123456"
 }
@@ -60,7 +60,7 @@ GET http://localhost:2029/Clients
 
 ################################################################
 
-Delete  http://localhost:2029/Clients/62331d94313ffd52d26493a2
+Delete  http://localhost:2029/Clients/
 Content-Type: application/json
 
 {
@@ -76,7 +76,7 @@ Content-Type: application/json
 
 {
     "email": "sia@yahoo.com",
-    "password":"0183456"
+    "password":"01835456"
 }
 
 ################################################################

@@ -17,9 +17,9 @@ const clientSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  userType: {
+  token: {
     type: String,
-    required: true,
+    // required: true,
   },
   role: {
     type: String,
