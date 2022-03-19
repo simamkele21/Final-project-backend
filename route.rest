@@ -49,10 +49,10 @@ POST  http://localhost:2029/Clients/signup
 Content-Type: application/json
 
 {
-    "name": "Sia",
-    "email": "sixa@yahoo.com",
-    "password":"0123456",
-    "phone_number": "0123456"
+    "name": "disa",
+    "email": "disa@yahoo.com",
+    "password":"987645123",
+    "phoneNumber": "0987645123"
 }
 
 ################################################################
@@ -76,7 +76,7 @@ Content-Type: application/json
 
 {
     "email": "sia@yahoo.com",
-    "password":"01835456"
+    "password":"012345678"
 }
 
 ################################################################
@@ -89,6 +89,12 @@ Content-Type: application/json
 }
 
 # ################################################################
-# POST  http://localhost:2029/Clients/logoutAll
-# Content-Type: application/json
+
+PUT  http://localhost:2029/Clients/
+Content-Type: application/json
+
+{
+    "email": "sia@yahoo.com",
+    "password":"0123456"
+}
 

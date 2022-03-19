@@ -28,7 +28,7 @@ async function DuplicatednameorEmail(req, res, next) {
     client = await Client.findOne({ name: req.body.name });
     email = await Client.findOne({ email: req.body.email });
     if (client || email) {
-      return res.status(404).send({ message: "name already exists" });
+      return res.status(404).send({ message: "Credentials already exists" });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -86,55 +86,75 @@ router.post("/signup", DuplicatednameorEmail, async (req, res, next) => {
 
 // //login
 
-router.post("/login", async (req, res) => {
-  try {
-    const client = await Client.findByCredentials(
-      req.body.email,
-      req.body.password
-    );
-    const token = await Client.generateAuthToken();
-    res.json({ client, token });
-  } catch (err) {
-    res.status(400).send({ message: "Invalid user" });
-  }
-});
 // router.post("/login", async (req, res) => {
 //   try {
-//     Client.findOne({ name: req.body.name}, (err, client) => {
-//       if (err) return handleError(err);
-//       id (!customer) {
-//         return res.status(404).send({ message: "No client found"});
-//       }
-//       let passwordIsValid = bcrypt.compare(
-//         req.body.password,
-//         client.password
-//       );
-//       if (passwordIsValid){
-//         return res.status(401).send({ 
-//           accessToken: null,
-//           message: "Invalid Password!", 
-//         });
-//       }
-
-//       console.log(process.env.ACCESS_TOKEN_SECRET)
-//       let token = jwt.sign({ id: client.id }, process.env.ACCESS_TOKEN_SECRET,{
-//         expiresIn: "72h"
-//       });
-//       res.status(200).send({ 
-//         id: client.id,
-//         name: client.name, 
-//         email: client.email,
-//         password: client.password,
-//         phoneNumber: client.phoneNumber,
-//         cart: client.cart,
-//         accessToken: token
-//       });
-//     });
-//   }catch(err){
-//     res.status(400).json({ message: err.message });
+//     const client = await Client.findByCredentials(
+//       req.body.email,
+//       req.body.password
+//     );
+//     const token = await Client.generateAuthToken();
+//     res.json({ client, token });
+//   } catch (err) {
+//     res.status(400).send({ message: "Invalid user" });
 //   }
 // });
+router.post("/login", async (req, res) => {
+  try {
+    Client.findOne({ name: req.body.name }, (err, client) => {
+      if (err) return handleError(err);
+      if (!client) {
+        return res.status(404).send({ message: "client Not found." });
+      }
+      let passwordIsValid = bcrypt.compare(req.body.password, client.password);
+      if (!passwordIsValid) {
+        return res.status(401).send({
+          accessToken: null,
+          message: "Invalid Password!",
+        });
+      }
 
+      console.log(process.env.ACCESS_TOKEN_SECRET);
+      let token = jwt.sign({ id: client.id }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "72h",
+      });
+      res.status(200).send({
+        id: client.id,
+        name: client.name,
+        email: client.email,
+        password: client.password,
+        // phoneNumber: client.phoneNumber,
+        cart: client.cart,
+        accessToken: token,
+      });
+    });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+// //Update
+router.put("/:id", getClient, async (req, res) => {
+  if (req.body.id != req.clientId) {
+    return res.status(401).send({ message: "Unauthorized!" });
+  }
+  if (req.body.name != null) {
+    res.client.name = req.body.name;
+  }
+  if (req.body.email != null) {
+    res.client.email = req.body.email;
+  }
+  if (req.body.password != null) {
+    res.client.password = req.body.password;
+  }
+  if (req.body.join_date != null) {
+    res.client.join_date = req.body.join_date;
+  }
+  try {
+    const updatedClient = await res.client.save();
+    res.json(updatedClient);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 // //logout
 router.post("/logout", async (req, res) => {
   try {

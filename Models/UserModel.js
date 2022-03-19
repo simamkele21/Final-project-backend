@@ -15,7 +15,7 @@ const clientSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: Number,
-    required: true,
+    // required: true,
   },
   token: {
     type: String,
