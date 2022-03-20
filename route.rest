@@ -60,31 +60,25 @@ GET http://localhost:2029/Clients
 
 ################################################################
 
-Delete  http://localhost:2029/Clients/
+Delete  http://localhost:2029/Clients/623596bb2fdfdfa75534cb98
 Content-Type: application/json
 
-{
-    "name": "Sia",
-    "email": "sia@yahoo.com",
-    "password":"0123456",
-    "phone_number": "0123456"
-}
 
 ################################################################
 POST  http://localhost:2029/Clients/login
 Content-Type: application/json
 
 {
-    "email": "sia@yahoo.com",
-    "password":"012345678"
+    "email": "disa@yahoo.com",
+    "password":"987645123"
 }
 
 ################################################################
-POST  http://localhost:2029/Clients/logout/
+POST  http://localhost:2029/Clients/logout
 Content-Type: application/json
 
 {
-    "email": "sia@yahoo.com",
+    "email": "disa@yahoo.com",
     "password":"0123456"
 }
 
