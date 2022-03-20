@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config");
 const Client = require("../Models/UserModel");
 const db = require("../Models");
+const config = process.env;
 // const Customer = db.customer;
 
 // const auth = async (req, res, next) => {
@@ -28,17 +29,24 @@ const db = require("../Models");
 // };
 const Role = db.role;
 verifyToken = (req, res, next) => {
-  let token = req.headers["x-access-token"];
+  let token = req.body.token || req.query.token || req.headers["x-access-token"];
   if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
+    return res.status(403).send("A token is required for authentication");
   }
-  jwt.verify(token, config.secret, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({ message: "Unauthorized!" });
-    }
-    req.clientId = decoded.id;
-    next();
-  });
+  try {
+    const decoded = jwt.verify(token, config.TOKEN_KEY);
+    req.user = decoded;
+  } catch (err) {
+    return res.status(401).send("Invalid Token");
+  }
+  return next();
+  // jwt.verify(token, config.secret, (err, decoded) => {
+  //   if (err) {
+  //     return res.status(401).send({ message: "Unauthorized!" });
+  //   }
+  //   req.clientId = decoded.id;
+  //   next();
+  // });
 };
 isAdmin = (req, res, next) => {
   Client.findById(req.clientId).exec((err, client) => {
@@ -67,7 +75,7 @@ isAdmin = (req, res, next) => {
     );
   });
 };
-isModerator = (req, res, next) => {
+isClient = (req, res, next) => {
   Client.findById(req.clientId).exec((err, client) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -83,7 +91,7 @@ isModerator = (req, res, next) => {
           return;
         }
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
+          if (roles[i].name === "client") {
             next();
             return;
           }
@@ -97,6 +105,6 @@ isModerator = (req, res, next) => {
 const authJwt = {
   verifyToken,
   isAdmin,
-  isModerator,
+  isClient,
 };
 module.exports = authJwt;
