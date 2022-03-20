@@ -131,6 +131,7 @@ router.post("/login", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
 // //Update
 router.put("/:id", getClient, async (req, res) => {
   if (req.body.id != req.clientId) {
