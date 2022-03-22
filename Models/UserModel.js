@@ -23,7 +23,7 @@ const clientSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: "customer",
+    default: "client",
   },
   cart: {
     type: Array,

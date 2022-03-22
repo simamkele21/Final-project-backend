@@ -131,7 +131,7 @@ router.post("/login", async (req, res) => {
     if (!(email && password)) {
       res.status(400).send("All input is required");
     }
-    if (client && (await bcrypt.compare(password, client.password))) {
+    else if (client && (await bcrypt.compare(password, client.password))) {
       const token = jwt.sign(
         { client_id: client._id, email },
         process.env.TOKEN_KEY,
@@ -140,7 +140,7 @@ router.post("/login", async (req, res) => {
         }
       );
       client.token = token;
-      res.status(200).json(client);
+      return res.status(200).json(client);
     }
     res.status(400).send("Invalid Credentials");
   } catch (err) {

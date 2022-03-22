@@ -50,8 +50,8 @@ Content-Type: application/json
 
 {
     "name": "test",
-    "email": "test@yahoo.com",
-    "password":"test",
+    "email": "wedone@yahoo.com",
+    "password":"wedone",
     "phoneNumber": "0987645123"
 }
 
@@ -60,11 +60,11 @@ GET http://localhost:2029/Clients
 
 ################################################################
 
-GET http://localhost:2029/Clients/
+GET http://localhost:2029/Clients/6239dc90d28c6fe193cd12ac
 
 ################################################################
 
-Delete  http://localhost:2029/Clients/6236fbda5edf5b3eeba3ab74
+Delete  http://localhost:2029/Clients/6239c11a903fd0f1d115a1b4
 Content-Type: application/json
 
 
@@ -73,26 +73,26 @@ POST  http://localhost:2029/Clients/login
 Content-Type: application/json
 
 {
-    "email": "test@yahoo.com",
-    "password":"test"
+    "email": "wedone@yahoo.com",
+    "password":"wedone"
 }
 
 ################################################################
-POST  http://localhost:2029/Clients/logout
-Content-Type: application/json
+# POST  http://localhost:2029/Clients/logout
+# Content-Type: application/json
 
-{
-    "email": "disa@yahoo.com",
-    "password":"0123456"
-}
+# {
+#     "email": "disa@yahoo.com",
+#     "password":"0123456"
+# }
 
 # ################################################################
 
-PUT  http://localhost:2029/Clients/
+PUT  http://localhost:2029/Clients/6239dc90d28c6fe193cd12ac
 Content-Type: application/json
 
 {
-    "email": "sia@yahoo.com",
-    "password":"0123456"
+    "email": "wedone@yahoo.com",
+    "password":"wedone"
 }
 
