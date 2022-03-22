@@ -49,9 +49,9 @@ POST  http://localhost:2029/Clients/signup
 Content-Type: application/json
 
 {
-    "name": "disa",
-    "email": "disa@yahoo.com",
-    "password":"987645123",
+    "name": "test",
+    "email": "test@yahoo.com",
+    "password":"test",
     "phoneNumber": "0987645123"
 }
 
@@ -60,7 +60,11 @@ GET http://localhost:2029/Clients
 
 ################################################################
 
-Delete  http://localhost:2029/Clients/623596bb2fdfdfa75534cb98
+GET http://localhost:2029/Clients/
+
+################################################################
+
+Delete  http://localhost:2029/Clients/6236fbda5edf5b3eeba3ab74
 Content-Type: application/json
 
 
@@ -69,8 +73,8 @@ POST  http://localhost:2029/Clients/login
 Content-Type: application/json
 
 {
-    "email": "disa@yahoo.com",
-    "password":"987645123"
+    "email": "test@yahoo.com",
+    "password":"test"
 }
 
 ################################################################

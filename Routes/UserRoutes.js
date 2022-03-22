@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // const { check } = require("express-validator");
-const verifyToken = require("../Middleware/Auth");
+const authjwt = require("../Middleware/Auth");
 const Client = require("../Models/UserModel");
 
 async function getClient(req, res, next) {
@@ -61,7 +61,7 @@ router.get("/", async (req, res) => {
 });
 
 // //Getting one account.
-router.get("/:id", Client, (req, res) => {
+router.get("/:id", getClient, (req, res) => {
   res.send(res.client);
 });
 
@@ -84,11 +84,10 @@ router.get("/:id", Client, (req, res) => {
 //   }
 // });
 router.post("/signup", async (req, res) => {
-
   try {
     const { name, email, password } = req.body;
 
-    if (!(email && password && name )) {
+    if (!(email && password && name)) {
       res.status(400).send("All input is required");
     }
 
@@ -106,13 +105,15 @@ router.post("/signup", async (req, res) => {
       password: encryptedPassword,
     });
 
-    const token = jwt.sign(
-      { client: client._id, email },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "78h",
-      }
-    );
+    const token =
+      jwt.sign[
+        ({ client: client._id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "78h",
+        })
+      ];
+
     client.token = token;
 
     res.status(201).json(client);
@@ -121,17 +122,15 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-
 // //login
 router.post("/login", async (req, res) => {
-
+  const { email, password } = req.body;
+  const client = await Client.findOne({ email });
+  
   try {
-    const { email, password } = req.body;
-
     if (!(email && password)) {
       res.status(400).send("All input is required");
     }
-    const client = await Client.findOne({ email });s
     if (client && (await bcrypt.compare(password, client.password))) {
       const token = jwt.sign(
         { client_id: client._id, email },
@@ -149,39 +148,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// router.post("/login", async (req, res) => {
-//   try {
-//     Client.findOne({ name: req.body.name }, (err, client) => {
-//       if (err) return handleError(err);
-//       if (!client) {
-//         return res.status(404).send({ message: "client logged in." });
-//       }
-//       let passwordIsValid = bcrypt.compare(req.body.password, client.password);
-//       if (!passwordIsValid) {
-//         return res.status(401).send({
-//           accessToken: null,
-//           message: "Invalid Password!",
-//         });
-//       }
-
-//       console.log(process.env.ACCESS_TOKEN_SECRET);
-//       let token = jwt.sign({ id: client.id }, process.env.ACCESS_TOKEN_SECRET, {
-//         expiresIn: "72h",
-//       });
-//       res.status(200).send({
-//         id: client.id,
-//         name: client.name,
-//         email: client.email,
-//         password: client.password,
-//         phoneNumber: client.phoneNumber,
-//         cart: client.cart,
-//         accessToken: token,
-//       });
-//     });
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// });
 
 // //Update
 router.put("/:id", getClient, async (req, res) => {
