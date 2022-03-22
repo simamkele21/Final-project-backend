@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config");
 const Client = require("../Models/UserModel");
 const db = require("../Models");
-const config = process.env;
+// const config = process.env;
 // const Customer = db.customer;
 
 // const auth = async (req, res, next) => {
@@ -29,7 +29,8 @@ const config = process.env;
 // };
 const Role = db.role;
 verifyToken = (req, res, next) => {
-  let token = req.body.token || req.query.token || req.headers["x-access-token"];
+  let token =
+    req.body.token || req.query.token || req.headers["x-access-token"];
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
