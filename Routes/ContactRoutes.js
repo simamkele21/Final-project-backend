@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  let { name, lastname, email, message } = req.body;
+  let { name, surname, email, message } = req.body;
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
     from: email,
     to: "Simamkelejanuary@gmail.com",
     subject: "New Contact from Artisticly Deadly Online store",
-    text: `${(name, lastname)} has contacted you 
+    text: `${(name, surname)} has contacted you 
   
   please contact them back on and ${email}
   ${message}`,

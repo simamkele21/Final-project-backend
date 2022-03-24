@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 const productRoutes = require("./Routes/ProductRoutes");
 const userRoutes = require("./Routes/UserRoutes");
-const ContactRoutes = require("./Routes/ContactRoutes");
+const contactRoutes = require("./Routes/ContactRoutes");
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () => {
   console.log("Connected to Simamkele's E-commerce backend Database");
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 app.use("/Products", productRoutes);
 app.use("/Clients", userRoutes);
-app.use("/Contact", ContactRoutes);
+app.use("/Contact", contactRoutes);
 
 const port = process.env.PORT || 2029;
 app.listen(port, () => console.log(`Listening on port ${port} ...`));
