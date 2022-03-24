@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 const productRoutes = require("./Routes/ProductRoutes");
 const userRoutes = require("./Routes/UserRoutes");
+const cartRoutes = require("./Routes/CartRoutes");
 const contactRoutes = require("./Routes/ContactRoutes");
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () => {
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 app.use("/Products", productRoutes);
 app.use("/Clients", userRoutes);
+app.use("/Cart", cartRoutes);
 app.use("/Contact", contactRoutes);
 
 const port = process.env.PORT || 2029;
