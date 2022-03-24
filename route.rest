@@ -2,7 +2,7 @@ GET http://localhost:2029/
 
 ################################################################
 
-GET http://localhost:2029/Products
+GET http://localhost:2029/Products/62342dc11d08c98cf801e27f
 
 ################################################################
 
@@ -54,9 +54,13 @@ GET http://localhost:2029/Clients
 ################################################################
 
 <<<<<<< HEAD
+GET http://localhost:2029/Clients/6239d906d28c6fe193cd12a1
+=======
+<<<<<<< HEAD
 Delete  http://localhost:2029/Clients/6236fbda5edf5b3eeba3ab74
 =======
 GET http://localhost:2029/Clients/6239dc90d28c6fe193cd12ac
+>>>>>>> 3a8e75ec7209a228d86f7d787e0893285a9a89ae
 
 ################################################################
 

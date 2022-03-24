@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../Models/ProductModel");
-
-
+var p;
 async function getProduct(req, res, next) {
   let product;
+  console.log(req.params.id)
   try {
     product = await Product.findById(req.params.id);
     if (product == null) {
@@ -13,6 +13,8 @@ async function getProduct(req, res, next) {
   } catch (err) {
     return res.status(500).send({ message: err.message });
   }
+  res.product = product;
+  next();
 }
 //Getting all Products.
 router.get("/", async (req, res) => {
@@ -26,6 +28,7 @@ router.get("/", async (req, res) => {
 
 //Getting one Product.
 router.get("/:id", getProduct, (req, res) => {
+  console.log(res.product)
   res.send(res.product);
 });
 
