@@ -28,28 +28,11 @@ verifyToken = (req, res, next) => {
 isAdmin = (req, res, next) => {
   Client.findById(req.clientId).exec((err, client) => {
     if (err) {
-      res.status(500).send({ message: err });
-      return;
+      return res.status(401).send({ message: "Unauthorized!" });
     }
-    Role.find(
-      {
-        _id: { $in: client.roles },
-      },
-      (err, roles) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-        for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
-            next();
-            return;
-          }
-        }
-        res.status(403).send({ message: "Require Admin Role!" });
-        return;
-      }
-    );
+    req.clientId = decoded.id;
+    // req.cart = decoded.cart;
+    next();
   });
 };
 isClient = (req, res, next) => {

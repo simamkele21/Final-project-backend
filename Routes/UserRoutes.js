@@ -3,8 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const verifyAcc = require("../Middleware/Auth");
+const DuplicatedNameorEmail = require("../middleware/verifyInfo");
 // const { check } = require("express-validator");
-const authjwt = require("../Middleware/Auth");
+// const authjwt = require("../Middleware/Auth");
 const Client = require("../Models/UserModel");
 
 async function getClient(req, res, next) {
@@ -22,19 +24,6 @@ async function getClient(req, res, next) {
   next();
 }
 
-async function DuplicatednameorEmail(req, res, next) {
-  let client;
-  try {
-    client = await Client.findOne({ name: req.body.name });
-    email = await Client.findOne({ email: req.body.email });
-    if (client || email) {
-      return res.status(404).send({ message: "Credentials already exists" });
-    }
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-  next();
-}
 
 async function findByCredentials(req, res, next) {
   let client;
@@ -118,7 +107,7 @@ router.post("/signup", async (req, res) => {
 
     res.status(201).json(client);
   } catch (err) {
-    console.log(err);
+    res.status(400).json({ message: err.message });
   }
 });
 
@@ -144,10 +133,9 @@ router.post("/login", async (req, res) => {
     }
     res.status(400).send("Invalid Credentials");
   } catch (err) {
-    console.log(err);
+    res.status(400).json({ message: err.message });
   }
 });
-
 
 // //Update
 router.put("/:id", getClient, async (req, res) => {
@@ -173,6 +161,16 @@ router.put("/:id", getClient, async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+//deleting a client
+router.delete("/:id", [getClient, verifyAcc], async (req, res) => {
+  try {
+    await res.client.remove();
+    res.json({ message: "Deleted User" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 // //logout
 router.post("/logout", async (req, res) => {
   try {
@@ -183,16 +181,6 @@ router.post("/logout", async (req, res) => {
     res.send({ message: "Client logged out" });
   } catch (err) {
     res.status(500).send({ message: "failed logging client out" });
-  }
-});
-
-//deleting a client
-router.delete("/:id", getClient, async (req, res) => {
-  try {
-    await res.client.remove();
-    res.json({ message: "Deleted User" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
 });
 
