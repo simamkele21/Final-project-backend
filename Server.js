@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 app.use("/Products", productRoutes);
 app.use("/Clients", userRoutes);
-app.use("/Clients", ContactRoutes);
+app.use("/Contact", ContactRoutes);
 
 const port = process.env.PORT || 2029;
 app.listen(port, () => console.log(`Listening on port ${port} ...`));
