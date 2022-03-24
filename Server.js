@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 const productRoutes = require("./Routes/ProductRoutes");
 const userRoutes = require("./Routes/UserRoutes");
+const ContactRoutes = require("./Routes/ContactRoutes");
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () => {
   console.log("Connected to Simamkele's E-commerce backend Database");
@@ -13,14 +14,12 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () => {
 app.use(express.json());
 app.use(cors());
 
-
 app.get("/", (req, res) => {
   res.send({ msg: "Welcome to Simamkele's E-commerce backend" });
 });
 app.use("/Products", productRoutes);
 app.use("/Clients", userRoutes);
 app.use("/Clients", ContactRoutes);
-
 
 const port = process.env.PORT || 2029;
 app.listen(port, () => console.log(`Listening on port ${port} ...`));
