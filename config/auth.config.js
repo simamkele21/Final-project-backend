@@ -1,3 +1,3 @@
 module.exports = {
-  secret: "Artisticly Deadly",
+  "secret": "Artisticly_Deadly-secret-key",
 };

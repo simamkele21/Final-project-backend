@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//Updating one Product.
+//Updating one Product. needs work
 router.put("/:id", getProduct, async (req, res) => {
   if (req.body.name != null) {
     res.product.name = req.body.name;
@@ -72,7 +72,7 @@ router.put("/:id", getProduct, async (req, res) => {
 });
 
 //Delete one Product.
-router.delete("/:id", getProduct, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     await res.product.remove();
     res.json({ message: "Product deleted successfully." });

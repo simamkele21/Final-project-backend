@@ -11,37 +11,30 @@ Content-Type: application/json
 
 {
     "image":"https://i.postimg.cc/qqRrWkGs/Ud2ce8a021b7e4d34b7904bcd53c59608c.jpg",
-    "name":"Space scater",
-    "description":" Printed Scater in space",
-    "category":"T-shirt",
+    "name":"test",
+    "description":" test",
+    "category":"Test",
     "price": "250"
 }
 
 ################################################################
 
-PUT  http://localhost:2029/Products/6234332b1d08c98cf801e29b
+PUT  http://localhost:2029/Products/623431e31d08c98cf801e293
 Content-Type: application/json
 
 {
     "image":"https://i.postimg.cc/2SDJB9Nh/HTB1cj-K6ak-Y2g-K0j-SZFgq6-A5-OFXa-D.jpg",
-    "name":"winter sweatshirt hoodie",
-    "description":"A fleece hooded pullover sweatshirt that is anti-pilling, anti-Shrink, anti-wrinkle, breathable, sustainable",
-    "category":"Hoodie / Sweatshirt",
-    "price": "600"
+    "name":" 3D Digital Printing Motorcycle hoodie",
+    "description":"Custom Men's Hoodies 3D Digital Printing Motorcycle",
+    "category":" Hoodie",
+    "price": "0"
 }
 
 ################################################################################################################################
 
-DELETE  http://localhost:2029/Products/623305236c80ccee5ab7850c
+DELETE  http://localhost:2029/Products/623714071020b8de92ce77e6
 Content-Type: application/json
 
-{
- "image":"https://i.postimg.cc/FzyzwFFS/1.jpg",
-    "name":"69",
-    "description":"dtudrysht",
-    "category":"hoodie",
-    "price": "500"
-}
 
 ################################################################
 
@@ -60,7 +53,7 @@ GET http://localhost:2029/Clients
 
 ################################################################
 
-Delete  http://localhost:2029/Clients/623596bb2fdfdfa75534cb98
+Delete  http://localhost:2029/Clients/6236fbda5edf5b3eeba3ab74
 Content-Type: application/json
 
 
@@ -84,11 +77,14 @@ Content-Type: application/json
 
 # ################################################################
 
-PUT  http://localhost:2029/Clients/
+PUT  http://localhost:2029/Clients/6236fbda5edf5b3eeba3ab74
 Content-Type: application/json
 
 {
-    "email": "sia@yahoo.com",
-    "password":"0123456"
+    "email": "disa@yahoo.com",
+    "password":"987645123"
 }
+
+# ################################################################
+
 

@@ -1,4 +1,5 @@
 const config = require("../config/auth.config");
+const config = require('config')
 const db = require("../Models");
 const Client = db.client;
 const Role = db.role;
@@ -31,7 +32,7 @@ exports.signup = (req, res) => {
               res.status(500).send({ message: err });
               return;
             }
-            res.send({ message: "User was registered successfully!" });
+            res.send({ message: "Client was registered successfully!" });
           });
         }
       );
@@ -47,7 +48,7 @@ exports.signup = (req, res) => {
             res.status(500).send({ message: err });
             return;
           }
-          res.send({ message: "User was registered successfully!" });
+          res.send({ message: "Client was registered successfully!" });
         });
       });
     }
@@ -76,7 +77,7 @@ exports.signin = (req, res) => {
           message: "Invalid Password!",
         });
       }
-      var token = jwt.sign({ id: client.id }, config.secret, {
+      var token = jwt.sign({ id: client.id }, config.get("secret"), {
         expiresIn: 86400, // 24 hours
       });
       var authorities = [];
