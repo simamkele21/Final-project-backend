@@ -163,7 +163,7 @@ router.put("/:id", getClient, async (req, res) => {
 });
 
 //deleting a client
-router.delete("/:id", [getClient, verifyAcc], async (req, res) => {
+router.delete("/:id", getClient, async (req, res) => {
   try {
     await res.client.remove();
     res.json({ message: "Deleted User" });
