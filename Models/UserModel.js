@@ -13,17 +13,17 @@ const clientSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phoneNumber: {
-    type: Number,
-    // required: true,
-  },
+  // phoneNumber: {
+  //   type: Number,
+  //   required: true,
+  // },
   token: {
     type: String,
     // required: true,
   },
   role: {
     type: String,
-    default: 0,
+    default: "client",
   },
   cart: {
     type: Array,

@@ -1,5 +1,4 @@
 require("dotenv").config();
-// require("./config/db.config").connect();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -13,6 +12,8 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () => {
 });
 app.use(express.json());
 app.use(cors());
+
+
 app.get("/", (req, res) => {
   res.send({ msg: "Welcome to Simamkele's E-commerce backend" });
 });

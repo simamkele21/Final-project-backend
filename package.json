@@ -4,7 +4,8 @@
   "description": "",
   "main": "Server.js",
   "scripts": {
-    "start": "nodemon server"
+    "start": "node Server",
+    "dev": "nodemon Server.js"
   },
   "author": "Simamkele January",
   "license": "ISC",

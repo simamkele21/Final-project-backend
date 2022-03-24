@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const verifyAcc = require("../Middleware/Auth");
 const DuplicatedNameorEmail = require("../middleware/verifyInfo");
+// const { check } = require("express-validator");
+// const authjwt = require("../Middleware/Auth");
 const Client = require("../Models/UserModel");
 
 async function getClient(req, res, next) {
@@ -48,61 +50,88 @@ router.get("/", async (req, res) => {
 });
 
 // //Getting one account.
-router.get("/:id", Client, (req, res) => {
+router.get("/:id", getClient, (req, res) => {
   res.send(res.client);
 });
 
 // //signup
-router.post("/signup", DuplicatedNameorEmail, async (req, res, next) => {
-  const salt = await bcrypt.genSalt();
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
-  const client = new Client({
-    name: req.body.name,
-    email: req.body.email,
-    password: hashedPassword,
-    phoneNnumber: req.body.phoneNumber,
-  });
+// router.post("/signup", DuplicatednameorEmail, async (req, res, next) => {
+//   const salt = await bcrypt.genSalt();
+//   const hashedPassword = await bcrypt.hash(req.body.password, salt);
+//   const client = new Client({
+//     name: req.body.name,
+//     email: req.body.email,
+//     password: hashedPassword,
+//     phoneNnumber: req.body.phoneNumber,
+//   });
+//   try {
+//     const newClient = await client.save();
+//     // res.status(201).json(newClient);
+//     res.status(200).send({ message: "Created new client" });
+//   } catch (err) {
+//     res.status(400).json({ message: err.message });
+//   }
+// });
+router.post("/signup", async (req, res) => {
   try {
-    const newClient = await client.save();
-    // res.status(201).json(newClient);
-    res.status(200).send({ message: "Created new client" });
+    const { name, email, password } = req.body;
+
+    if (!(email && password && name)) {
+      res.status(400).send("All input is required");
+    }
+
+    const oldClient = await Client.findOne({ email });
+
+    if (oldClient) {
+      return res.status(409).send("Client Already Exist. Please Login");
+    }
+
+    encryptedPassword = await bcrypt.hash(password, 10);
+
+    const client = await Client.create({
+      name,
+      email: email.toLowerCase(), // sanitize: convert email to lowercase
+      password: encryptedPassword,
+    });
+
+    const token =
+      jwt.sign[
+        ({ client: client._id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "78h",
+        })
+      ];
+
+    client.token = token;
+
+    res.status(201).json(client);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-
-
 // //login
-
-router.post("/login",findByCredentials, async (req, res) => {
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const client = await Client.findOne({ email });
+  
   try {
-    Client.findOne({ name: req.body.name }, (err, client) => {
-      if (err) return handleError(err);
-      if (!client) {
-        return res.status(404).send({ message: "client Not found." });
-      }
-      let passwordIsValid = bcrypt.compare(req.body.password, client.password);
-      if (!passwordIsValid) {
-        return res.status(401).send({
-          accessToken: null,
-          message: "Invalid Password!",
-        });
-      }
-
-      console.log(process.env.ACCESS_TOKEN_SECRET);
-      let token = jwt.sign({ id: client.id }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "72h",
-      });
-      res.status(200).send({
-        id: client.id,
-        name: client.name,
-        email: client.email,
-        password: client.password,
-        cart: client.cart,
-        accessToken: token,
-      });
-    });
+    if (!(email && password)) {
+      res.status(400).send("All input is required");
+    }
+    else if (client && (await bcrypt.compare(password, client.password))) {
+      const token = jwt.sign(
+        { client_id: client._id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "78h",
+        }
+      );
+      client.token = token;
+      return res.status(200).json(client);
+    }
+    res.status(400).send("Invalid Credentials");
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
