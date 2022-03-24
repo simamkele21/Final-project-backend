@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
+require("dotenv").config()
+
 
 router.get("/", (req, res) => {
   res.send({ message: "For Contact only POST method accepted" });

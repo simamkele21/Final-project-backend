@@ -1,108 +1,106 @@
 const express = require("express");
-const verifyToken = require("../Middleware/Auth");
 const Client = require("../Models/UserModel");
-const getProduct = require("../Middleware/GetProduct");
+// const getProduct = require("../Middleware/GetProduct");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const Product = require("../Models/ProductModel");
+// const Product = require("../Models/ProductModel");
 
-router.get("/", [verifyToken, getClient], (req, res) => {
+async function getClient(req, res, next) {
+  let client;
+  try {
+    client = await Client.findById(req.params.id);
+    if (client == null) {
+      return res.status(404).json({ message: "Cannot find Client" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+  res.client = client;
+  next();
+}
+
+router.get("/", getClient, (req, res) => {
   return res.send(res.client.cart);
 });
 
-router.post("/:id", [verifyToken, getClient], async (req, res) => {
+router.post("/:id", getClient, async (req, res) => {
   let Product = await Product.findById(req.params.id).lean();
   let qty = req.body.qty;
   let cart = res.client.cart;
   let added = false;
   cart.forEach((item) => {
-    if (item._id.valueOf() == movie._id.valueOf()) {
+    if (item._id.valueOf() == product._id.valueOf()) {
       item.qty += qty;
       added = true;
     }
   });
 
   if (!added) {
-    cart.push({ ...movie, qty });
+    cart.push({ ...product, qty });
   }
   try {
-    res.user.cart = cart;
+    res.client.cart = cart;
 
     let token = jwt.sign(
-      { _id: req.userId, cart: res.user.cart },
+      { _id: req.clientId, cart: res.client.cart },
       process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: 86400, // 24 hours
       }
     );
-    const updatedUser = await res.user.save();
-    res.status(200).json({ updatedUser, token });
+    const updatedClient = await res.client.save();
+    res.status(200).json({ updatedClient, token });
   } catch (error) {
     console.log(error);
   }
 });
 
-router.put("/:id", [verifyToken, getMovie], async (req, res) => {
-  const user = await User.findById(req.user._id);
-  const inCart = user.cart.some((prod) => prod._id == req.params._id);
+router.put("/:id",getClient, async (req, res) => {
+  const client = await Client.findById(req.client._id);
+  const inCart = client.cart.some((prod) => prod._id == req.params._id);
 
-  let updatedUser;
+  let updatedClient;
   if (inCart) {
-    const movie = user.cart.find((prod) => prod._id == req.params._id);
-    movie.qty += req.body.qty;
-    updatedUser = await user.save();
+    const product = client.cart.find((prod) => prod._id == req.params._id);
+    product.qty += req.body.qty;
+    updatedClient = await client.save();
   } else {
-    user.cart.push({ ...res.movie, qty: req.body.qty });
-    updatedUser = await user.save;
+    client.cart.push({ ...res.product, qty: req.body.qty });
+    updatedClient = await client.save;
   }
   try {
     const ACCESS_TOKEN_SECRET = jwt.sign(
-      JSON.stringify(updatedUser),
+      JSON.stringify(updatedClient),
       process.env.ACCESS_TOKEN_SECRET
     );
-    res.status(201).json({ jwt: ACCESS_TOKEN_SECRET, cart: updatedUser.cart });
+    res.status(201).json({ jwt: ACCESS_TOKEN_SECRET, cart: updatedClient.cart });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-router.delete("/:id", [verifyToken, getUser], async (req, res) => {
-  let cart = res.user.cart;
+router.delete("/:id", getClient, async (req, res) => {
+  let cart = res.client.cart;
   cart.forEach((cartitem) => {
     if (cartitem._id == req.params.id) {
       cart = cart.filter((cartitems) => cartitems._id != req.params.id);
     }
   });
   try {
-    res.user.cart = cart;
+    res.client.cart = cart;
 
-    const updated = res.user.save();
+    const updated = res.client.save();
     let token = jwt.sign(
-      { _id: req.userId, cart },
+      { _id: req.clientId, cart },
       process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: 86400, // 24 hours
       }
     );
-    res.json({ message: "Deleted movie", updated, token });
+    res.json({ message: "Deleted product", updated, token });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-
-async function getUser(req, res, next) {
-  let user;
-  try {
-    user = await User.findById(req.userId);
-    if (user == null) {
-      return res.status(404).json({ message: "Cannot find User" });
-    }
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-
-  res.user = user;
-  next();
-}
 
 module.exports = router;
