@@ -93,7 +93,7 @@ POST http://localhost:2029/Contact/
 Content-Type: application/json
 
 {
-    "name": "test",
+    "name": "tesft",
     "surname":"test",
     "email": "test@yahoo.com",
     "password":"test"
