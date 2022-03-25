@@ -3,10 +3,6 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const verifyAcc = require("../Middleware/Auth");
-const DuplicatedNameorEmail = require("../middleware/verifyInfo");
-// const { check } = require("express-validator");
-// const authjwt = require("../Middleware/Auth");
 const Client = require("../Models/UserModel");
 
 async function getClient(req, res, next) {

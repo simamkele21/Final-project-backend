@@ -2,7 +2,7 @@ GET http://localhost:2029/
 
 ################################################################
 
-GET http://localhost:2029/Products/62342dc11d08c98cf801e27f
+GET http://localhost:2029/Cart/
 
 ################################################################
 
@@ -89,14 +89,26 @@ Content-Type: application/json
 
 # ################################################################
 
-PUT  http://localhost:2029/Clients/6239dc90d28c6fe193cd12ac
+POST http://localhost:2029/Clients/6239dc90d28c6fe193cd12ac
 Content-Type: application/json
 
 {
-    "email": "wedone@yahoo.com",
-    "password":"wedone"
+    "name": "test",
+    "surname":"test",
+    "email": "test@yahoo.com",
+    "password":"test"
 }
 
 # ################################################################
 
+POST http://localhost:2029/Contact/
 
+Content-Type: application/json
+
+{
+    "name": "test",
+    "surname":"test",
+    "email": "test@yahoo.com",
+    "password":"test"
+}
+#############
