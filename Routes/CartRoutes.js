@@ -1,9 +1,8 @@
 const express = require("express");
 const Client = require("../Models/UserModel");
-// const getProduct = require("../Middleware/GetProduct");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-// const Product = require("../Models/ProductModel");
+const middleware = require('../Middleware/Auth')
 
 async function getClient(req, res, next) {
   let client;
@@ -19,8 +18,9 @@ async function getClient(req, res, next) {
   next();
 }
 
-router.get("/", getClient, (req, res) => {
-  return res.send(res.client.cart);
+router.get("/", middleware.verifyToken, (req, res) => {
+  // return res.send(res.client.cart);
+  console.log(req.client)
 });
 
 router.post("/:id", getClient, async (req, res) => {

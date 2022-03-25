@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Client = require("../Models/UserModel");
+const middleware = require('../Middleware/Auth')
+
 
 async function getClient(req, res, next) {
   let client;
@@ -68,7 +70,7 @@ router.get("/:id", getClient, (req, res) => {
 //     res.status(400).json({ message: err.message });
 //   }
 // });
-router.post("/signup", async (req, res) => {
+router.post("/signup", middleware.verifyToken, async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
