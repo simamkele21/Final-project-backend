@@ -3,7 +3,7 @@ GET http://localhost:2029/
 ################################################################
 
 GET http://localhost:2029/Cart/
-x-auth-token 
+x-auth-token : 
 
 
 ################################################################
@@ -61,8 +61,8 @@ POST  http://localhost:2029/Clients/login
 Content-Type: application/json
 
 {
-    "email": "wedone@yahoo.com",
-    "password":"wedone"
+    "email": "test@yahoo.com",
+    "password":"test"
 }
 
 ################################################################
